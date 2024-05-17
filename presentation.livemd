@@ -1,12 +1,11 @@
 # Elixir Days - Nx + LiveView
 
-```elixir
-Mix.install([
-  :req
-])
-```
-
 ## Introdução
+
+* **Paulo Valente**
+* **R&D @ DockYard**
+* **Mantenedor @ elixir-nx e elixir-grpc**
+* **GitHub/Twitter: polvalente**
 
 Nesta palestra, veremos um passo a passo de como adicionar uma funcionalidade de Inteligência Artificial em uma aplicação Phoenix LiveView.
 
