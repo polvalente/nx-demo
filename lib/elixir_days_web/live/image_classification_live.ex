@@ -47,16 +47,16 @@ defmodule ElixirDaysWeb.ImageClassificationLive do
 
   def handle_event("frame", %{"frame" => frame_data}, socket) do
     frame_data = Base.decode64!(frame_data)
-    image = StbImage.read_binary!(frame_data)
+    # image = StbImage.read_binary!(frame_data)
 
-    # z = :zlib.open()
-    # :ok = :zlib.inflateInit(z)
-    # decompressed_data = :zlib.inflate(z, frame_data)
-    # :ok = :zlib.inflateEnd(z)
-    # :zlib.close(z)
+    z = :zlib.open()
+    :ok = :zlib.inflateInit(z)
+    decompressed_data = :zlib.inflate(z, frame_data)
+    :ok = :zlib.inflateEnd(z)
+    :zlib.close(z)
 
-    # decompressed_data = IO.iodata_to_binary(decompressed_data)
-    # image = StbImage.read_binary!(decompressed_data)
+    decompressed_data = IO.iodata_to_binary(decompressed_data)
+    image = StbImage.read_binary!(decompressed_data)
 
     %{predictions: classification} = Nx.Serving.batched_run(ImageClassifierServing, image)
 

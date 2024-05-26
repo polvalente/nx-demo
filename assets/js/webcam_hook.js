@@ -10,51 +10,51 @@ export const WebcamHookMount = (hook) => {
     canvas.height = video.videoHeight;
     const context = canvas.getContext("2d");
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    const dataUrl = canvas.toDataURL("image/png");
-    const frameData = dataUrl.replace(/^data:image\/(png|jpeg);base64,/, "");
-    hook.pushEvent("frame", { frame: frameData });
-
-    // // Create a second canvas for resizing
-    // const resizedCanvas = document.createElement("canvas");
-    // const resizedContext = resizedCanvas.getContext("2d");
-
-    // // Draw the original canvas onto the resized canvas
-    // resizedContext.drawImage(
-    //   canvas,
-    //   0,
-    //   0,
-    //   canvas.width,
-    //   canvas.height,
-    //   0,
-    //   0,
-    //   244,
-    //   244
-    // );
-
-    // const dataUrl = resizedCanvas.toDataURL("image/png");
+    // const dataUrl = canvas.toDataURL("image/png");
     // const frameData = dataUrl.replace(/^data:image\/(png|jpeg);base64,/, "");
+    // hook.pushEvent("frame", { frame: frameData });
 
-    // // Convert the base64 string to a binary string
-    // const binaryString = atob(frameData);
+    // Create a second canvas for resizing
+    const resizedCanvas = document.createElement("canvas");
+    const resizedContext = resizedCanvas.getContext("2d");
 
-    // // Convert the binary string to a byte array
-    // const byteArray = new Uint8Array(binaryString.length);
-    // for (let i = 0; i < binaryString.length; i++) {
-    //   byteArray[i] = binaryString.charCodeAt(i);
-    // }
+    // Draw the original canvas onto the resized canvas
+    resizedContext.drawImage(
+      canvas,
+      0,
+      0,
+      canvas.width,
+      canvas.height,
+      0,
+      0,
+      244,
+      244
+    );
 
-    // // Compress the byte array using pako
-    // const compressedData = pako.deflate(byteArray);
+    const dataUrl = resizedCanvas.toDataURL("image/png");
+    const frameData = dataUrl.replace(/^data:image\/(png|jpeg);base64,/, "");
 
-    // // Convert the compressed byte array to a base64 string
-    // const compressedBase64 = btoa(
-    //   Array.from(compressedData)
-    //     .map((char) => String.fromCharCode(char))
-    //     .join("")
-    // );
+    // Convert the base64 string to a binary string
+    const binaryString = atob(frameData);
 
-    // // Push the frame to LiveView
-    // hook.pushEvent("frame", { frame: compressedBase64 });
+    // Convert the binary string to a byte array
+    const byteArray = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      byteArray[i] = binaryString.charCodeAt(i);
+    }
+
+    // Compress the byte array using pako
+    const compressedData = pako.deflate(byteArray);
+
+    // Convert the compressed byte array to a base64 string
+    const compressedBase64 = btoa(
+      Array.from(compressedData)
+        .map((char) => String.fromCharCode(char))
+        .join("")
+    );
+
+    // Push the frame to LiveView
+    hook.pushEvent("frame", { frame: compressedBase64 });
   }
 
   const video = document.getElementById("webcam");
