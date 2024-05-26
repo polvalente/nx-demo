@@ -23,6 +23,10 @@ end
 config :nx, :default_backend, EXLA.Backend
 config :nx, :default_defn_options, compiler: EXLA
 
+start_camera_serving = System.get_env("START_CAMERA_SERVING") in ["true", 1]
+
+config :elixir_days, start_camera_serving: start_camera_serving
+
 if config_env() == :prod do
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you

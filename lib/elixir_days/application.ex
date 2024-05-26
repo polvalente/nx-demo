@@ -11,19 +11,31 @@ defmodule ElixirDays.Application do
     {:ok, featurizer} = Bumblebee.load_featurizer({:hf, "microsoft/resnet-50"})
     serving = Bumblebee.Vision.image_classification(resnet, featurizer)
 
-    children = [
-      ElixirDaysWeb.Telemetry,
-      {Nx.Serving,
-       name: ImageClassifierServing, serving: serving, batch_size: 10, batch_timeout: 100},
-      {DNSCluster, query: Application.get_env(:elixir_days, :dns_cluster_query) || :ignore},
-      {Phoenix.PubSub, name: ElixirDays.PubSub},
-      # Start the Finch HTTP client for sending emails
-      {Finch, name: ElixirDays.Finch},
-      # Start a worker by calling: ElixirDays.Worker.start_link(arg)
-      # {ElixirDays.Worker, arg},
-      # Start to serve requests, typically the last entry
-      ElixirDaysWeb.Endpoint
-    ]
+    camera_serving =
+      if Application.get_env(:elixir_days, :start_camera_serving) do
+        [
+          {Nx.Serving,
+           name: ImageClassifierServing, serving: serving, batch_size: 10, batch_timeout: 100}
+        ]
+      else
+        []
+      end
+
+    children =
+      [
+        ElixirDaysWeb.Telemetry
+      ] ++
+        camera_serving ++
+        [
+          {DNSCluster, query: Application.get_env(:elixir_days, :dns_cluster_query) || :ignore},
+          {Phoenix.PubSub, name: ElixirDays.PubSub},
+          # Start the Finch HTTP client for sending emails
+          {Finch, name: ElixirDays.Finch},
+          # Start a worker by calling: ElixirDays.Worker.start_link(arg)
+          # {ElixirDays.Worker, arg},
+          # Start to serve requests, typically the last entry
+          ElixirDaysWeb.Endpoint
+        ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
