@@ -18,6 +18,12 @@ export const WebcamHookMount = (hook) => {
     const resizedCanvas = document.createElement("canvas");
     const resizedContext = resizedCanvas.getContext("2d");
 
+    // Assuming that width >= height
+
+    const targetWidth = 244
+    const targetHeight = 244 * (canvas.height / canvas.width)
+
+
     // Draw the original canvas onto the resized canvas
     resizedContext.drawImage(
       canvas,
@@ -27,8 +33,8 @@ export const WebcamHookMount = (hook) => {
       canvas.height,
       0,
       0,
-      244,
-      244
+      targetWidth,
+      targetHeight
     );
 
     const dataUrl = resizedCanvas.toDataURL("image/png");

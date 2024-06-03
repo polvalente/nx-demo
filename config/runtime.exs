@@ -23,7 +23,7 @@ end
 config :nx, :default_backend, EXLA.Backend
 config :nx, :default_defn_options, compiler: EXLA
 
-start_camera_serving = System.get_env("START_CAMERA_SERVING") in ["true", 1]
+start_camera_serving = System.get_env("START_CAMERA_SERVING") in ["true", "1"]
 
 config :elixir_days, start_camera_serving: start_camera_serving
 
