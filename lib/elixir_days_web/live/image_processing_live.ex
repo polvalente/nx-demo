@@ -51,6 +51,7 @@ defmodule NxDemoWeb.ImageProcessingLive do
         autoplay
       >
       </video>
+      <canvas style="display: none" id="wasm-webcam-input" width="640" height="480"></canvas>
       <canvas id="wasm-webcam-output" width="640" height="480"></canvas>
     </div>
     """

@@ -1,10 +1,8 @@
 import Module from "./nx_iree_runtime.mjs";
 
 export const WasmWebcamHookMount = async (hook) => {
-  const fps = 30;
+  const fps = 15;
   const interval = 1000 / fps;
-
-  console.log(hook);
 
   const instance = await Module();
   let device = instance.createDevice();
@@ -13,11 +11,16 @@ export const WasmWebcamHookMount = async (hook) => {
 
   hook.runtime = { instance, device };
 
+  let type = "u8";
+
+  const canvas = document.getElementById("wasm-webcam-input");
+  const context = canvas.getContext("2d", { willReadFrequently: true });
+  const outputCanvas = document.getElementById("wasm-webcam-output");
+  const outputContext = outputCanvas.getContext("2d");
+
   function processFrame(video) {
-    const canvas = document.createElement("canvas");
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
-    const context = canvas.getContext("2d");
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
     // Get the ImageData object from the canvas (whole canvas)
@@ -28,14 +31,16 @@ export const WasmWebcamHookMount = async (hook) => {
 
     // Convert the Uint8ClampedArray to a Uint8Array (if necessary)
     const inputArray = new Uint8Array(uint8ClampedArray);
+    let shape = new Int32Array([video.videoHeight, video.videoWidth, 4]);
 
-    let type = "u8";
-    let shape = new Int32Array([canvas.height, canvas.width, 4]);
     let input = new instance.Tensor.create(inputArray, shape, type);
 
     let inputs = new instance.vector_Tensor();
     inputs.push_back(input);
 
+    // let bytecode = hook.runtime.bytecode;
+
+    // if (!hook.runtime.bytecode) {
     const bytecode_data = atob(video.getAttribute("data-bytecode"));
 
     // Create a Uint8Array from the decoded base64 string
@@ -45,7 +50,7 @@ export const WasmWebcamHookMount = async (hook) => {
       bytecode_uint8Array[i] = bytecode_data.charCodeAt(i);
     }
 
-    let bytecode = new instance.DataBuffer.create(bytecode_uint8Array);
+    bytecode = new instance.DataBuffer.create(bytecode_uint8Array);
 
     let [call_status, outputs] = instance.call(
       vminstance,
@@ -53,6 +58,7 @@ export const WasmWebcamHookMount = async (hook) => {
       bytecode,
       inputs
     );
+    bytecode.delete();
 
     if (!instance.statusIsOK(call_status)) {
       console.error("Error calling the VM instance");
@@ -72,9 +78,6 @@ export const WasmWebcamHookMount = async (hook) => {
     outputTensor.delete();
     outputs.delete();
 
-    const outputCanvas = document.getElementById("wasm-webcam-output");
-    const outputContext = outputCanvas.getContext("2d");
-
     // Create an ImageData object
     let imageData = outputContext.createImageData(canvas.width, canvas.height);
 
@@ -86,7 +89,6 @@ export const WasmWebcamHookMount = async (hook) => {
     // Draw the ImageData onto the canvas
     outputContext.putImageData(imageData, 0, 0);
 
-    bytecode.delete();
     inputs.delete();
     input.delete();
   }
@@ -105,6 +107,7 @@ export const WasmWebcamHookMount = async (hook) => {
 };
 
 export const WasmWebcamHookDestroy = (hook) => {
+  hook.runtime.bytecode.delete();
   hook.runtime.device.delete();
   hook.runtime.vminstance.delete();
 };
