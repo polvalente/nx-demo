@@ -1,6 +1,6 @@
-defmodule ElixirDays do
+defmodule NxDemo do
   @moduledoc """
-  ElixirDays keeps the contexts that define your domain
+  NxDemo keeps the contexts that define your domain
   and business logic.
 
   Contexts are also responsible for managing your data, regardless

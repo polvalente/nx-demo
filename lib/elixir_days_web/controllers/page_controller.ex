@@ -1,5 +1,5 @@
-defmodule ElixirDaysWeb.PageController do
-  use ElixirDaysWeb, :controller
+defmodule NxDemoWeb.PageController do
+  use NxDemoWeb, :controller
 
   def home(conn, _params) do
     # The home page is often custom made,

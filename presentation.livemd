@@ -2,10 +2,10 @@
 
 ## Introdução
 
-* **Paulo Valente**
-* **R&D @ DockYard**
-* **Mantenedor @ elixir-nx e elixir-grpc**
-* **GitHub/Twitter: polvalente**
+- **Paulo Valente**
+- **R&D @ DockYard**
+- **Mantenedor @ elixir-nx e elixir-grpc**
+- **GitHub/Twitter: polvalente**
 
 Nesta palestra, veremos um passo a passo de como adicionar uma funcionalidade de Inteligência Artificial em uma aplicação Phoenix LiveView.
 
@@ -15,7 +15,7 @@ Como exemplo, vamos utilizar um modelo de classificação de imagens com Bumbleb
 
 ## Preparação
 
-1. Criar o projeto: `mix phx.new elixir_days`
+1. Criar o projeto: `mix phx.new nx_demo`
 2. Adicionar as dependências:
 
 <!-- livebook:{"force_markdown":true} -->
@@ -47,9 +47,9 @@ Vamos introduzir uma nova página em `/image_classification`.
 A página vai capturar imagens da webcam, enviá-las para o servidor, e retornar uma classificação de qual objeto está aparecendo.
 
 ```elixir
-# elixir_days_web/live/image_classification_live.ex
-defmodule ElixirDaysWeb.ImageClassificationLive do
-  use ElixirDaysWeb, :live_view
+# nx_demo_web/live/image_classification_live.ex
+defmodule NxDemoWeb.ImageClassificationLive do
+  use NxDemoWeb, :live_view
 
   def mount(_params, _session, socket) do
     {:ok,
@@ -65,9 +65,9 @@ defmodule ElixirDaysWeb.ImageClassificationLive do
   def render(assigns) do
     ~H"""
     <div id="webcam-container" phx-hook="WebcamHook">
-      <video id="webcam" width="640" height="480" autoplay></video>
+      <video id="webcam" width="320" height="240" autoplay></video>
     </div>
-    <div class="py-4" style="width: 640px">
+    <div class="py-4" style="width: 320px">
       <%= for prediction <- Enum.sort_by(@predictions, & &1.score, :desc) do %>
         <div class="w-full text-gray-800 text-sm font-semibold mr-2 mb-2">
           <div class="inline-block w-1/6" />
@@ -122,10 +122,10 @@ end
 ```
 
 ```elixir
-# elixir_days_web/router.ex
+# nx_demo_web/router.ex
 
 # ...
-scope "/", ElixirDaysWeb do
+scope "/", NxDemoWeb do
   pipe_through(:browser)
 
   # ...

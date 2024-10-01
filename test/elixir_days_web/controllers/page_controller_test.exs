@@ -1,5 +1,5 @@
-defmodule ElixirDaysWeb.PageControllerTest do
-  use ElixirDaysWeb.ConnCase
+defmodule NxDemoWeb.PageControllerTest do
+  use NxDemoWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")

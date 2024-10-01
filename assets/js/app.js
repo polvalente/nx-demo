@@ -23,10 +23,17 @@ import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
 
 import { WebcamHookMount } from "./webcam_hook";
+import { WasmWebcamHookMount } from "./wasm_webcam_hook";
 
 WebcamHook = {
   mounted() {
     WebcamHookMount(this);
+  },
+};
+
+WasmWebcamHook = {
+  mounted() {
+    WasmWebcamHookMount(this);
   },
 };
 
@@ -36,7 +43,7 @@ let csrfToken = document
 let liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
   params: { _csrf_token: csrfToken },
-  hooks: { WebcamHook },
+  hooks: { WebcamHook, WasmWebcamHook },
 });
 
 // Show progress bar on live navigation and form submits

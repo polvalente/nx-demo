@@ -1,5 +1,5 @@
-defmodule ElixirDaysWeb.ImageClassificationLive do
-  use ElixirDaysWeb, :live_view
+defmodule NxDemoWeb.ImageClassificationLive do
+  use NxDemoWeb, :live_view
 
   def mount(_params, _session, socket) do
     {:ok,
@@ -15,9 +15,9 @@ defmodule ElixirDaysWeb.ImageClassificationLive do
   def render(assigns) do
     ~H"""
     <div id="webcam-container" phx-hook="WebcamHook">
-      <video id="webcam" width="640" height="480" autoplay></video>
+      <video id="webcam" width="320" height="240" autoplay></video>
     </div>
-    <div class="py-4" style="width: 640px">
+    <div class="py-4" style="width: 320px">
       <%= for prediction <- Enum.sort_by(@predictions, & &1.score, :desc) do %>
         <div class="w-full text-gray-800 text-sm font-semibold mr-2 mb-2">
           <div class="inline-block w-1/6" />

@@ -1,11 +1,11 @@
-defmodule ElixirDaysWeb.Gettext do
+defmodule NxDemoWeb.Gettext do
   @moduledoc """
   A module providing Internationalization with a gettext-based API.
 
   By using [Gettext](https://hexdocs.pm/gettext),
   your module gains a set of macros for translations, for example:
 
-      import ElixirDaysWeb.Gettext
+      import NxDemoWeb.Gettext
 
       # Simple translation
       gettext("Here is the string to translate")
@@ -20,5 +20,5 @@ defmodule ElixirDaysWeb.Gettext do
 
   See the [Gettext Docs](https://hexdocs.pm/gettext) for detailed usage.
   """
-  use Gettext, otp_app: :elixir_days
+  use Gettext, otp_app: :nx_demo
 end

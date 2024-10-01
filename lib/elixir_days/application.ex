@@ -1,4 +1,4 @@
-defmodule ElixirDays.Application do
+defmodule NxDemo.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -12,7 +12,7 @@ defmodule ElixirDays.Application do
     serving = Bumblebee.Vision.image_classification(resnet, featurizer)
 
     camera_serving =
-      if Application.get_env(:elixir_days, :start_camera_serving) do
+      if Application.get_env(:nx_demo, :start_camera_serving) do
         [
           {Nx.Serving,
            name: ImageClassifierServing, serving: serving, batch_size: 10, batch_timeout: 100}
@@ -23,23 +23,23 @@ defmodule ElixirDays.Application do
 
     children =
       [
-        ElixirDaysWeb.Telemetry
+        NxDemoWeb.Telemetry
       ] ++
         camera_serving ++
         [
-          {DNSCluster, query: Application.get_env(:elixir_days, :dns_cluster_query) || :ignore},
-          {Phoenix.PubSub, name: ElixirDays.PubSub},
+          {DNSCluster, query: Application.get_env(:nx_demo, :dns_cluster_query) || :ignore},
+          {Phoenix.PubSub, name: NxDemo.PubSub},
           # Start the Finch HTTP client for sending emails
-          {Finch, name: ElixirDays.Finch},
-          # Start a worker by calling: ElixirDays.Worker.start_link(arg)
-          # {ElixirDays.Worker, arg},
+          {Finch, name: NxDemo.Finch},
+          # Start a worker by calling: NxDemo.Worker.start_link(arg)
+          # {NxDemo.Worker, arg},
           # Start to serve requests, typically the last entry
-          ElixirDaysWeb.Endpoint
+          NxDemoWeb.Endpoint
         ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: ElixirDays.Supervisor]
+    opts = [strategy: :one_for_one, name: NxDemo.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
@@ -47,7 +47,7 @@ defmodule ElixirDays.Application do
   # whenever the application is updated.
   @impl true
   def config_change(changed, _new, removed) do
-    ElixirDaysWeb.Endpoint.config_change(changed, removed)
+    NxDemoWeb.Endpoint.config_change(changed, removed)
     :ok
   end
 end

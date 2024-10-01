@@ -1,12 +1,12 @@
-defmodule ElixirDaysWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :elixir_days
+defmodule NxDemoWeb.Endpoint do
+  use Phoenix.Endpoint, otp_app: :nx_demo
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
   @session_options [
     store: :cookie,
-    key: "_elixir_days_key",
+    key: "_nx_demo_key",
     signing_salt: "7CFvWg0d",
     same_site: "Lax"
   ]
@@ -21,9 +21,9 @@ defmodule ElixirDaysWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: :elixir_days,
+    from: :nx_demo,
     gzip: false,
-    only: ElixirDaysWeb.static_paths()
+    only: NxDemoWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -48,5 +48,5 @@ defmodule ElixirDaysWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug ElixirDaysWeb.Router
+  plug NxDemoWeb.Router
 end

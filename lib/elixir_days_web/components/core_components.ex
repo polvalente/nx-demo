@@ -1,4 +1,4 @@
-defmodule ElixirDaysWeb.CoreComponents do
+defmodule NxDemoWeb.CoreComponents do
   @moduledoc """
   Provides core UI components.
 
@@ -17,7 +17,7 @@ defmodule ElixirDaysWeb.CoreComponents do
   use Phoenix.Component
 
   alias Phoenix.LiveView.JS
-  import ElixirDaysWeb.Gettext
+  import NxDemoWeb.Gettext
 
   @doc """
   Renders a modal.
@@ -661,9 +661,9 @@ defmodule ElixirDaysWeb.CoreComponents do
     # with our gettext backend as first argument. Translations are
     # available in the errors.po file (as we use the "errors" domain).
     if count = opts[:count] do
-      Gettext.dngettext(ElixirDaysWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(NxDemoWeb.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(ElixirDaysWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(NxDemoWeb.Gettext, "errors", msg, opts)
     end
   end
 

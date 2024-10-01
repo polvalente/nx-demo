@@ -1,4 +1,4 @@
-defmodule ElixirDaysWeb.Telemetry do
+defmodule NxDemoWeb.Telemetry do
   use Supervisor
   import Telemetry.Metrics
 
@@ -63,7 +63,7 @@ defmodule ElixirDaysWeb.Telemetry do
     [
       # A module, function and arguments to be invoked periodically.
       # This function must call :telemetry.execute/3 and a metric must be added above.
-      # {ElixirDaysWeb, :count_users, []}
+      # {NxDemoWeb, :count_users, []}
     ]
   end
 end

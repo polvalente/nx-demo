@@ -1,12 +1,12 @@
-defmodule ElixirDaysWeb do
+defmodule NxDemoWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, components, channels, and so on.
 
   This can be used in your application as:
 
-      use ElixirDaysWeb, :controller
-      use ElixirDaysWeb, :html
+      use NxDemoWeb, :controller
+      use NxDemoWeb, :html
 
   The definitions below will be executed for every controller,
   component, etc, so keep them short and clean, focused
@@ -40,10 +40,10 @@ defmodule ElixirDaysWeb do
     quote do
       use Phoenix.Controller,
         formats: [:html, :json],
-        layouts: [html: ElixirDaysWeb.Layouts]
+        layouts: [html: NxDemoWeb.Layouts]
 
       import Plug.Conn
-      import ElixirDaysWeb.Gettext
+      import NxDemoWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -52,7 +52,7 @@ defmodule ElixirDaysWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {ElixirDaysWeb.Layouts, :app}
+        layout: {NxDemoWeb.Layouts, :app}
 
       unquote(html_helpers())
     end
@@ -84,8 +84,8 @@ defmodule ElixirDaysWeb do
       # HTML escaping functionality
       import Phoenix.HTML
       # Core UI components and translation
-      import ElixirDaysWeb.CoreComponents
-      import ElixirDaysWeb.Gettext
+      import NxDemoWeb.CoreComponents
+      import NxDemoWeb.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
@@ -98,9 +98,9 @@ defmodule ElixirDaysWeb do
   def verified_routes do
     quote do
       use Phoenix.VerifiedRoutes,
-        endpoint: ElixirDaysWeb.Endpoint,
-        router: ElixirDaysWeb.Router,
-        statics: ElixirDaysWeb.static_paths()
+        endpoint: NxDemoWeb.Endpoint,
+        router: NxDemoWeb.Router,
+        statics: NxDemoWeb.static_paths()
     end
   end
 

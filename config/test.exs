@@ -2,13 +2,13 @@ import Config
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :elixir_days, ElixirDaysWeb.Endpoint,
+config :nx_demo, NxDemoWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
   secret_key_base: "dK/K3bbc//563AplGqN3r2tVTJCBZ2piW35+7GLsChueUM9g54/9A5bR+7jSh140",
   server: false
 
 # In test we don't send emails.
-config :elixir_days, ElixirDays.Mailer, adapter: Swoosh.Adapters.Test
+config :nx_demo, NxDemo.Mailer, adapter: Swoosh.Adapters.Test
 
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false

@@ -1,9 +1,9 @@
-defmodule ElixirDays.MixProject do
+defmodule NxDemo.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :elixir_days,
+      app: :nx_demo,
       version: "0.1.0",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -18,7 +18,7 @@ defmodule ElixirDays.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {ElixirDays.Application, []},
+      mod: {NxDemo.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -56,8 +56,10 @@ defmodule ElixirDays.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.2"},
       {:stb_image, "~> 0.1"},
-      {:exla, "~> 0.7"},
-      {:bumblebee, "~> 0.5"}
+      {:exla, github: "elixir-nx/nx", sparse: "exla", override: true},
+      {:nx, github: "elixir-nx/nx", sparse: "nx", override: true},
+      {:bumblebee, "~> 0.5"},
+      {:nx_iree, path: "/home/valente/coding/nx_iree"}
     ]
   end
 
@@ -71,10 +73,10 @@ defmodule ElixirDays.MixProject do
     [
       setup: ["deps.get", "assets.setup", "assets.build"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind elixir_days", "esbuild elixir_days"],
+      "assets.build": ["tailwind nx_demo", "esbuild nx_demo"],
       "assets.deploy": [
-        "tailwind elixir_days --minify",
-        "esbuild elixir_days --minify",
+        "tailwind nx_demo --minify",
+        "esbuild nx_demo --minify",
         "phx.digest"
       ]
     ]

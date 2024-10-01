@@ -6,7 +6,7 @@ import Config
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we can use it
 # to bundle .js and .css sources.
-config :elixir_days, ElixirDaysWeb.Endpoint,
+config :nx_demo, NxDemoWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {127, 0, 0, 1}, port: 4000],
@@ -15,8 +15,8 @@ config :elixir_days, ElixirDaysWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "Y75NibyF23msmvcZUW+ohjbJG/147FzcXiVtruzz85CIFp+rbF59oVL8NIuFwrzm",
   watchers: [
-    esbuild: {Esbuild, :install_and_run, [:elixir_days, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:elixir_days, ~w(--watch)]}
+    esbuild: {Esbuild, :install_and_run, [:nx_demo, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:nx_demo, ~w(--watch)]}
   ]
 
 # ## SSL Support
@@ -43,17 +43,17 @@ config :elixir_days, ElixirDaysWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :elixir_days, ElixirDaysWeb.Endpoint,
+config :nx_demo, NxDemoWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/elixir_days_web/(controllers|live|components)/.*(ex|heex)$"
+      ~r"lib/nx_demo_web/(controllers|live|components)/.*(ex|heex)$"
     ]
   ]
 
 # Enable dev routes for dashboard and mailbox
-config :elixir_days, dev_routes: true
+config :nx_demo, dev_routes: true
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

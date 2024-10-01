@@ -2,10 +2,10 @@
 
 ## Introduction
 
-* **Paulo Valente**
-* **R&D @ DockYard**
-* **Mantenedor @ elixir-nx e elixir-grpc**
-* **GitHub/Twitter: polvalente**
+- **Paulo Valente**
+- **R&D @ DockYard**
+- **Mantenedor @ elixir-nx e elixir-grpc**
+- **GitHub/Twitter: polvalente**
 
 In this talk, we'll do a step-by-step walkthrough on how to add an AI feature
 to an already existing Phoenix LiveView app.
@@ -17,7 +17,7 @@ As the example, we'll use an Image Classification model with Bumblebee.
 
 ## Setup
 
-1. Create the Phoenix project: `mix phx.new elixir_days`
+1. Create the Phoenix project: `mix phx.new nx_demo`
 2. Add the dependencies:
 
 <!-- livebook:{"force_markdown":true} -->
@@ -49,9 +49,9 @@ Let's introduce a new webpage at `/image_classification`.
 The page will capture images from the webcam, send them to the server, and return a ranked classification on which object is being captured.
 
 ```elixir
-# elixir_days_web/live/image_classification_live.ex
-defmodule ElixirDaysWeb.ImageClassificationLive do
-  use ElixirDaysWeb, :live_view
+# nx_demo_web/live/image_classification_live.ex
+defmodule NxDemoWeb.ImageClassificationLive do
+  use NxDemoWeb, :live_view
 
   def mount(_params, _session, socket) do
     {:ok,
@@ -67,7 +67,7 @@ defmodule ElixirDaysWeb.ImageClassificationLive do
   def render(assigns) do
     ~H"""
     <div id="webcam-container" phx-hook="WebcamHook">
-      <video id="webcam" width="640" height="480" autoplay></video>
+      <video id="webcam" width="640" height="240" autoplay></video>
     </div>
     <div class="py-4" style="width: 640px">
       <%= for prediction <- Enum.sort_by(@predictions, & &1.score, :desc) do %>
@@ -124,10 +124,10 @@ end
 ```
 
 ```elixir
-# elixir_days_web/router.ex
+# nx_demo_web/router.ex
 
 # ...
-scope "/", ElixirDaysWeb do
+scope "/", NxDemoWeb do
   pipe_through(:browser)
 
   # ...
@@ -308,7 +308,7 @@ We just need to change our supervision tree to accomodate for optionally initial
 
 ```elixir
 camera_serving =
-  if Application.get_env(:elixir_days, :start_camera_serving) do
+  if Application.get_env(:nx_demo, :start_camera_serving) do
     [
       {Nx.Serving,
         name: ImageClassifierServing, serving: serving, batch_size: 10, batch_timeout: 100}
@@ -319,17 +319,17 @@ camera_serving =
 
 children =
   [
-    ElixirDaysWeb.Telemetry
+    NxDemoWeb.Telemetry
   ] ++
     camera_serving ++
     [
-      {DNSCluster, query: Application.get_env(:elixir_days, :dns_cluster_query) || :ignore},
-      {Phoenix.PubSub, name: ElixirDays.PubSub},
+      {DNSCluster, query: Application.get_env(:nx_demo, :dns_cluster_query) || :ignore},
+      {Phoenix.PubSub, name: NxDemo.PubSub},
       # Start the Finch HTTP client for sending emails
-      {Finch, name: ElixirDays.Finch},
-      # Start a worker by calling: ElixirDays.Worker.start_link(arg)
-      # {ElixirDays.Worker, arg},
+      {Finch, name: NxDemo.Finch},
+      # Start a worker by calling: NxDemo.Worker.start_link(arg)
+      # {NxDemo.Worker, arg},
       # Start to serve requests, typically the last entry
-      ElixirDaysWeb.Endpoint
+      NxDemoWeb.Endpoint
     ]
 ```
