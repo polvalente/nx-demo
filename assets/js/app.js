@@ -23,7 +23,7 @@ import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
 
 import { WebcamHookMount } from "./webcam_hook";
-import { WasmWebcamHookMount } from "./wasm_webcam_hook";
+import { WasmWebcamHookMount, WasmWebcamHookDestroy } from "./wasm_webcam_hook";
 
 WebcamHook = {
   mounted() {
@@ -34,6 +34,10 @@ WebcamHook = {
 WasmWebcamHook = {
   mounted() {
     WasmWebcamHookMount(this);
+  },
+
+  destroyed() {
+    WasmWebcamHookDestroy(this);
   },
 };
 
