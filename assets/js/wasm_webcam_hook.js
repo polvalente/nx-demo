@@ -1,7 +1,7 @@
 import Module from "./nx_iree_runtime.mjs";
 
 export const WasmWebcamHookMount = async (hook) => {
-  const fps = 15;
+  const fps = 30;
   const interval = 1000 / fps;
 
   const instance = await Module();
@@ -82,7 +82,7 @@ export const WasmWebcamHookMount = async (hook) => {
       bytecode_uint8Array[i] = bytecode_data.charCodeAt(i);
     }
 
-    bytecode = new instance.DataBuffer.create(bytecode_uint8Array);
+    const bytecode = new instance.DataBuffer.create(bytecode_uint8Array);
     const bytecodeDuration = performance.now() - bytecodeStart;
     hook.durations.bytecode = hook.durations.bytecode
       ? (bytecodeDuration + hook.durations.bytecode) / 2

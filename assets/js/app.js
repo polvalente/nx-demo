@@ -25,13 +25,13 @@ import topbar from "../vendor/topbar";
 import { WebcamHookMount } from "./webcam_hook";
 import { WasmWebcamHookMount, WasmWebcamHookDestroy } from "./wasm_webcam_hook";
 
-WebcamHook = {
+const WebcamHook = {
   mounted() {
     WebcamHookMount(this);
   },
 };
 
-WasmWebcamHook = {
+const WasmWebcamHook = {
   mounted() {
     WasmWebcamHookMount(this);
   },
