@@ -23,7 +23,7 @@ defmodule NxDemoWeb.ImageProcessingLive do
       "--iree-llvmcpu-target-cpu-features=+atomics,+bulk-memory,+simd128"
     ]
 
-    kernel_size = assigns[:kernel_size] || 20
+    kernel_size = assigns[:kernel_size] || 7
 
     {:ok, %{bytecode: bytecode}} =
       NxIREE.Compiler.to_bytecode(
