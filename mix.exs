@@ -59,7 +59,7 @@ defmodule NxDemo.MixProject do
       {:exla, github: "elixir-nx/nx", sparse: "exla", override: true},
       {:nx, github: "elixir-nx/nx", sparse: "nx", override: true},
       {:bumblebee, "~> 0.5"},
-      {:nx_iree, path: "/home/valente/coding/nx_iree"}
+      {:nx_iree, path: "/home/valente/coding/nx_iree", app: false}
     ]
   end
 
